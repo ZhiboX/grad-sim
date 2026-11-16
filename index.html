@@ -85,6 +85,8 @@ button:not(:disabled):hover{border-color:var(--green);box-shadow:inset 0 0 0 1px
 .cases{display:grid;gap:8px}
 .choice,.side-move,.tile-button{display:flex;align-items:center;gap:10px;text-align:left;background:var(--raised);border:1px solid var(--edge);border-radius:12px;padding:11px 12px;min-height:48px}
 .choice:hover,.choice.chosen{background:var(--tag)}
+.choice:disabled{opacity:1;background:var(--field);color:var(--muted);border-style:dashed}
+.choice:disabled b{color:var(--muted);background:var(--raised)}
 .choice b{display:grid;place-items:center;width:34px;min-height:31px;flex:none;border-radius:7px;background:var(--tag);color:var(--green);font:800 .8rem var(--type)}
 .choice.risk b{background:var(--warm);color:var(--peach)}
 .choice span{line-height:1.42;overflow-wrap:anywhere}
@@ -99,8 +101,8 @@ button:not(:disabled):hover{border-color:var(--green);box-shadow:inset 0 0 0 1px
 .stat.hot b{color:var(--rose)}
 .stat.good b{color:var(--mint)}
 .side-moves{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:8px}
-.side-move{display:block;padding:7px 7px;font-size:.8rem}
-.side-move small{font-size:.68rem}
+.side-move{display:block;padding:9px 11px;font-size:.94rem;overflow-wrap:anywhere}
+.side-move small{font-size:.76rem}
 .tool-box{display:grid;gap:10px;padding:12px;background:var(--field);border:1px solid var(--edge);border-radius:13px}
 .tool-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
 .tile-button{justify-content:center;text-align:center;padding:8px;min-height:58px}
@@ -283,7 +285,7 @@ body:has(dialog[open]){overflow:hidden}
 .host-guide summary{cursor:pointer;padding-block:6px;font-weight:750;min-height:35px}
 .host-guide p{padding:2px 0 7px;line-height:1.45}
 
-@media (max-width:700px), (max-width:1100px) and (orientation:portrait) {
+@media (max-width:700px), (max-width:1100px) and (orientation:portrait), (max-width:1000px) and (max-height:560px) {
   .app-shell{max-width:820px;padding: max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 30px max(14px,env(safe-area-inset-left))}
   .topbar{padding-bottom:9px;margin-bottom:12px;gap:6px}
   .brand{min-height:44px;font-size:1rem;min-width:0}
@@ -304,15 +306,14 @@ body:has(dialog[open]){overflow:hidden}
   .pocket-stats>div+div{border-inline-start:1px solid var(--edge)}
   .pocket-stats small{font-size:.78rem;line-height:1.25}
   .pocket-stats strong{font-size:1rem;line-height:1.25;color:var(--green);overflow-wrap:anywhere}
-  .pocket-nav{position:fixed;z-index:6;inset:auto 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:6px max(12px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));padding-inline:max(calc((100vw - 790px) / 2),12px,env(safe-area-inset-left),env(safe-area-inset-right));border-top:1px solid var(--edge);background:var(--surface);box-shadow:0 -8px 22px var(--shadow-soft)}
+  .pocket-nav{position:fixed;z-index:6;inset:auto 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:6px max(12px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));padding-inline:max(calc((100vw - 790px) / 2),12px,env(safe-area-inset-left),env(safe-area-inset-right));border-top:1px solid var(--edge);background:var(--surface);box-shadow:0 -8px 22px var(--shadow-soft)}
   .pocket-nav .btn{position:relative;display:grid;place-items:center;align-content:center;gap:2px;padding:4px 2px;border-color:transparent;background:transparent;color:var(--ink);line-height:1.15;font-size:.76rem}
   .pocket-nav .btn span{font-size:1.15rem;line-height:1;color:var(--green)}
   .pocket-nav .btn sup{position:absolute;top:1px;left:calc(50% + 10px);padding:2px 4px;border-radius:5px;background:var(--tag);font-size:.64rem;color:var(--green)}
   .scene{min-height:0;gap:14px;padding:clamp(15px,3.6vw,30px)}
   .scene h2{font-size:clamp(1.45rem,4.1vw,2.15rem)}
   .choice,.side-move{min-height:50px}
-  .side-move{padding:9px 10px;font-size:.91rem}
-  .side-move small{font-size:.76rem;margin-top:3px}
+  .field input,.field textarea,.archive-picker select{font-size:16px}
   .archive-tabs{display:none}
   .archive-picker{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;font-size:.84rem;font-weight:750;color:var(--muted)}
   .archive-picker select{flex:1 1 180px}
@@ -379,6 +380,8 @@ body:has(dialog[open]){overflow:hidden}
   .topbar .brand{font-size:.88rem}
   .topbar .brand-mark{width:26px;height:26px}
   .topbar .nav button{font-size:.74rem;padding-inline:4px}
+  .brand>span:last-child{overflow-wrap:anywhere}
+  .side-moves{grid-template-columns:1fr}
   .pocket-stats>div{gap:2px 5px}
   .pocket-stats small{font-size:.71rem}
   .pocket-stats strong{font-size:.91rem}
@@ -429,40 +432,45 @@ body:has(dialog[open]){overflow:hidden}
 .enrol-pickers .field{align-content:start;min-width:0}
 .enrol-pickers select{width:100%;min-width:0;min-height:46px;padding:8px 9px;border:1px solid var(--edge);border-radius:9px;background:var(--field);color:var(--ink);font:inherit;font-size:16px}
 .enrol-detail{line-height:1.45;font-size:.78rem}
-.pocket-affiliation,.turn-reminder{display:none}
-@media (max-width:700px), (max-width:1100px) and (orientation:portrait) {
+.pocket-affiliation{display:none}
+@media (max-width:700px), (max-width:1100px) and (orientation:portrait), (max-width:1000px) and (max-height:560px) {
   .pocket-affiliation{display:block;font-size:.79rem;font-weight:750;color:var(--green);margin:0 0 5px}
-  .turn-reminder{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px;padding:7px 9px 7px 12px;border:1px solid var(--tone);border-radius:12px;background:var(--tag);color:var(--ink)}
-  .turn-reminder strong,.turn-reminder small{display:block;line-height:1.35}
-  .turn-reminder strong{font-size:.92rem}
-  .turn-reminder small{font-size:.75rem}
-  .turn-reminder .turn-choose{flex:none;min-height:44px;padding:6px 12px;background:var(--surface);color:var(--green);border-color:var(--tone)}
-  .turn-reminder.done{border-color:var(--edge);background:var(--raised)}
-  .turn-reminder.done>span{padding:0 8px;color:var(--green);font-weight:800}
 }
+.turn-reminder{display:flex;flex-wrap:wrap;gap:7px 12px;align-items:center;justify-content:space-between;padding:8px 10px 8px 12px;border:1px solid var(--edge);border-radius:12px;background:var(--raised)}
+.turn-reminder>div{flex:1 1 116px;min-width:0}
+.turn-reminder strong,.turn-reminder small{display:block;line-height:1.35;overflow-wrap:anywhere}
+.turn-reminder strong{font-size:.94rem}
+.turn-reminder small{font-size:.79rem;margin-top:2px}
+.turn-reminder .turn-choose{flex:none;padding:7px 12px;background:var(--surface);color:var(--green);border-color:var(--tone)}
+.turn-reminder.done{background:var(--tag);min-height:62px}
+.turn-check{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--surface);color:var(--green);font-weight:800}
 @media (max-width:420px) {
   .enrol-pickers{grid-template-columns:1fr;gap:7px}
 }
 
-.paper-progress{display:grid;grid-template-columns:minmax(0,1fr) minmax(145px,300px);align-items:center;gap:12px;padding:11px 14px;margin:0 0 11px;border:1px solid var(--edge);border-radius:13px;background:var(--surface)}
-.paper-progress strong,.paper-progress small{display:block;line-height:1.35}
-.paper-progress strong{overflow-wrap:anywhere}
-.paper-progress small{font-size:.77rem}
-.paper-progress-meters{display:grid;gap:5px}
-.paper-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
-.paper-steps i{height:6px;border-radius:6px;background:var(--edge)}
+.paper-progress{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);align-items:center;gap:12px 24px;padding:12px 15px;margin:0 0 11px;border:1px solid var(--edge);border-radius:13px;background:var(--surface)}
+.paper-summary,.paper-progress-meters{display:grid;min-width:0;gap:5px}
+.paper-summary strong{line-height:1.35;overflow-wrap:anywhere;text-wrap:pretty}
+.paper-progress small{font-size:.8rem;line-height:1.4}
+.paper-meta,.paper-counts{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 12px;min-width:0}
+.paper-meta small,.paper-counts small{min-width:0;overflow-wrap:anywhere}
+.paper-meta small:first-child{color:var(--green);font-weight:700}
+.paper-venue{background:var(--raised);border-radius:5px;padding:1px 6px}
+.paper-counts{justify-content:space-between}
+.paper-counts b{font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.paper-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;width:100%}
+.paper-steps i{height:7px;border-radius:6px;background:var(--edge)}
 .paper-steps .filled{background:var(--green)}
 .publication-scene::before{background:var(--green)}
 .publication-scene .cases .btn{text-align:left}
 .publication-decision{padding:7px 10px;border-radius:7px;background:var(--tag);color:var(--green);font-weight:700}
 .publication-decision.rejected{background:var(--warm);color:var(--rose)}
 .rules-details summary{min-height:44px;padding:8px 0;cursor:pointer;color:var(--green);font-weight:750}
-@media(max-width:430px){
-  .paper-progress{grid-template-columns:1fr;gap:6px;padding:8px 11px}
-  .paper-progress-meters{grid-template-columns:minmax(38px,1fr) auto;align-items:center}
-  .paper-progress-meters small{font-size:.72rem}
-  .paper-progress .eyebrow{font-size:.67rem}
-  .paper-progress strong{font-size:.91rem}
+@media (max-width:700px), (max-width:1100px) and (orientation:portrait), (max-width:1000px) and (max-height:560px) {
+  .paper-progress{grid-template-columns:minmax(0,1fr);gap:10px;padding:10px 12px}
+  .paper-progress-meters{gap:6px}
+  .paper-progress .eyebrow{font-size:.71rem}
+  .paper-summary strong{font-size:1rem}
 }
 .branch-progress{display:flex;flex-wrap:wrap;justify-content:space-between;gap:3px 10px;padding:7px 11px;margin-bottom:10px;border-radius:8px;background:var(--warm);color:var(--peach);font-size:.78rem;font-weight:700}
 
@@ -480,6 +488,26 @@ const EVENTS = [{"id":1,"title":"你还不能毕业","intro":"导师说：「你
 </script>
 <script>
 'use strict';
+
+const BURST_PIPE = {
+  id:369,category:'australia',years:[2],mode:'case',
+  title:'楼里的水管爆了，电梯成了水帘洞',
+  intro:'公寓楼的主水管爆了。电梯停运，水从门缝流进卧室，地毯踩上去直冒水。物业说明天才有人来抽水，今晚先找地方住。',
+  options:[
+    {label:'借住同门家的沙发',requires:{stat:'n',min:55},result:'同门腾出了沙发，还给你一条干毛巾。第二天你带了早餐，感谢对方招待你和两袋湿袜子。',effect:{n:4,m:3}},
+    {label:'订两晚 Airbnb · A$280',result:'房间有洗衣机和餐桌。衣服洗上了，导师也收到了你在餐桌上改完的图。',effect:{c:-280,r:3,m:-3}},
+    {label:'住附近的酒店 · A$420',result:'你洗了个热水澡，补了一觉。入住小票摊在床头，比今天收到的评语还长。',effect:{c:-420,h:7,m:8}},
+    {label:'请学校帮忙找临时床位',result:'学生服务帮你找到一张临时床位，第二天还得回去收拾湿衣服。导师收到一封只写着“今天请假，家里进水”的邮件。',effect:{h:-4,m:-7}},
+  ],
+  en:{title:'The main pipe bursts and the lift becomes a waterfall',
+    intro:'The apartment building’s main pipe bursts. The lift shuts down, and water seeps under your bedroom door. The carpet squelches. Building management says the crew can’t pump it out until tomorrow. You need somewhere to sleep tonight.',
+    options:[
+      {label:'Crash on a labmate’s couch',result:'Your labmate clears the couch and hands you a dry towel. You bring breakfast the next morning to thank them for hosting you and your two bags of wet socks.'},
+      {label:'Book two nights on Airbnb · A$280',result:'There’s a washing machine and a dining table. Your clothes are in the wash, and your supervisor has the figure you finished at the table.'},
+      {label:'Stay at a nearby hotel · A$420',result:'You take a hot shower and catch up on sleep. The receipt on the bedside table is longer than today’s reviewer comments.'},
+      {label:'Ask student services for emergency accommodation',result:'Student services finds you a temporary bed. Tomorrow you still have to collect your soaked clothes. Your supervisor gets a one-line email: Taking today off. Flat flooded.'},
+    ]},
+};
 
 // Fictional scenes. Option hooks refer to in-game state only.
 const STORIES = [
@@ -12127,7 +12155,7 @@ const Research = (() => {
 'use strict';
 
 const TEXT = {
-  stats:{r:'Thesis readiness',c:'Cash',h:'Health',m:'Mood',t:'Supervisor',i:'Integrity',x:'Exposure',p:'Reputation'},
+  stats:{r:'Thesis readiness',c:'Cash',h:'Health',m:'Mood',t:'Supervisor',n:'Network',i:'Integrity',x:'Exposure',p:'Reputation'},
   years:['Orientation','Papers & reviews','Money & ethics','Thesis & graduation'],
   gates:[
     ['转正确认','Confirmation','Polish the research plan and early results'],
@@ -12142,7 +12170,7 @@ const TEXT = {
     leisure:['Close the laptop and go out','Mood +22 · Health +4 · Cash −A$35'],
     talk:['Coffee with your supervisor','Supervisor +7 · Cash −A$20'],
     account:['Sort out your receipts','Exposure −12 · Cash −A$120'],
-    peer:['Eat with a labmate','Health +5 · Mood +8 · Supervisor +2 · Cash −A$35'],
+    peer:['Eat with a labmate','Network +9 · Health +5 · Mood +8 · Supervisor +2 · Cash −A$35'],
   },
   notes:{
     finance:['资产处和财务处发了同一封联名邮件。','Asset management and finance sent one extremely joint email.'],
@@ -12203,6 +12231,7 @@ const MECHANICS = {
   h:['健康归零会停读。连轴写稿、抽查、补交会消耗健康。休息可以恢复。','At zero health, candidature pauses. Sustained work, audits and revisions cost health. Rest restores it.'],
   m:['截稿、回复和拒稿降低心情，录用、休息和出门能恢复。连续 3 回合心情不高于 24，进入科研停滞：准备度正收益减半，暂不能投新稿；回到 40 才恢复。','Deadlines, replies and rejection cost mood. Acceptance, rest and time out restore it. Three turns at 24 or below halve positive readiness gains and pause new submissions until mood reaches 40.'],
   t:['低好感会提高评审插曲概率，博三起也可能加送审要求。转独立评审可以解除导师卡签字。','Low approval makes review incidents more likely and can raise the readiness target from year three. Independent review removes the supervisor’s veto.'],
+  n:['人缘代表你和同门的关系。一起吃饭加 9 点。租房水管爆裂时，人缘至少 55 才能借住同门家。','Network tracks your relationship with labmates. A meal together adds 9 points. You need at least 55 to stay with a labmate after the pipe bursts.'],
   i:['人品跟随你的决定。通常每变动 2 点，声誉跟着变约 1 点；选项单独写明的声誉改动优先。人品过低会触发抽查，也影响毕业图鉴。','Choices change integrity. Reputation normally moves by about one point for every two integrity points unless that choice specifies its own reputation effect. Low integrity can trigger audits and changes graduation unlocks.'],
   x:['风险是违规被查出的可能性来源。风险达到 28、人品低于 −25 或声誉低于 37，任一成立才开启年度抽查。风险过高也会影响找工作。','Exposure reflects the chance of scrutiny. Annual audit risk turns on if exposure is at least 28, integrity falls below −25, or reputation falls below 37. Very high exposure also affects hiring.'],
   p:['论文发表概率会小幅受声誉影响。声誉低于 37 也会增加抽查风险。','Reputation slightly affects simulated acceptance odds. Below 37 it also contributes to audit risk.'],
@@ -12315,7 +12344,9 @@ function bindMiniScenes(events) {
 const Core = (() => {
   const TURNS = 24;
   const STORAGE = 'aus-phd-campus-v2';
-  const LABELS = {r:'论文准备度',c:'现金',h:'健康',m:'心情',t:'导师好感',i:'人品',x:'暴露风险',p:'学术声誉'};
+  const LABELS = {r:'论文准备度',c:'现金',h:'健康',m:'心情',t:'导师好感',n:'人缘',i:'人品',x:'暴露风险',p:'学术声誉'};
+  const BASE_NETWORK = 42;
+  const HOUSING_CHANCE = 0.8;
   const ORIGINAL_GROUPS = {
     mentor:[1,2,3,4,5,6,7,8,9,10,41,42,43,44,45,46,47,48,49,62],
     review:[11,12,13,14,15,16,17,18,19,20,31,32,33,34,35,36,37,38,39,40,61,63],
@@ -12325,7 +12356,7 @@ const Core = (() => {
     career:[22,50,51,52,53,54,55,56,57,58,59,60,64],
   };
   const ARCHIVE = bindMiniScenes([...EVENTS.map(event=>({...event,category:Object.keys(ORIGINAL_GROUPS).find(k=>ORIGINAL_GROUPS[k].includes(event.id))})),
-    ...STORIES,...BLACK_SWANS,...MINI_EXTRA,...DEPARTMENT_STORIES,...SCHOOL_STORIES,...JOINT_OPENERS]);
+    ...STORIES,BURST_PIPE,...BLACK_SWANS,...MINI_EXTRA,...DEPARTMENT_STORIES,...SCHOOL_STORIES,...JOINT_OPENERS]);
   const BY_ID = new Map(ARCHIVE.map(event=>[event.id,event]));
   const BADGES={
     cringe:['学术社死','Academic cringe'],
@@ -12419,7 +12450,7 @@ const Core = (() => {
     {id:'leisure',name:'关电脑，出去走走',detail:'心情 +22 · 健康 +4 · 现金 −A$35',effect:{m:22,h:4,c:-35}},
     {id:'talk',name:'约导师喝咖啡',detail:'导师好感 +7 · 现金 −A$20',effect:{t:7,c:-20}},
     {id:'account',name:'自查报销记录',detail:'风险 −12 · 现金 −A$120',effect:{x:-12,c:-120}},
-    {id:'peer',name:'和同门吃顿饭',detail:'健康 +5 · 心情 +8 · 导师好感 +2 · 现金 −A$35',effect:{h:5,m:8,t:2,c:-35}},
+    {id:'peer',name:'和同门吃顿饭',detail:'人缘 +9 · 健康 +5 · 心情 +8 · 导师好感 +2 · 现金 −A$35',effect:{n:9,h:5,m:8,t:2,c:-35}},
   ];
 
   const clamp = (n,lo,hi) => Math.max(lo,Math.min(hi,n));
@@ -12433,7 +12464,7 @@ const Core = (() => {
   function createRun(name,seed,profile){
     return {
       name:String(name).trim().slice(0,24)||'林深',profile:profile||null,seed:Number(seed)>>>0,turn:1,phase:'run',
-      stats:{r:9,c:1500,h:83,m:68,t:24,i:38,x:0,p:58},seen:[],history:[],gates:[],flags:{},
+      stats:{r:9,c:1500,h:83,m:68,t:24,n:BASE_NETWORK,i:38,x:0,p:58},seen:[],history:[],gates:[],flags:{},
       choice:null,task:null,aid:null,review:null,awards:[], papers:0,
       graduated:false,ending:null,reports:[],yearBase:null,evidence:[],badges:[],focus:[],careerVisits:0,campus:freshCampus(),
       miniSlots:makeMiniSlots(seed),enrolment:enrolment(profile),research:enrolment(profile)?Research.make():null,
@@ -12463,11 +12494,13 @@ const Core = (() => {
     const track=event.track||LEGACY_DISCIPLINE[event.id];
     return (!track||track===path.track)&&(!event.school||event.school===path.school);
   }
+  function housingTurn(run){return run.miniSlots.includes(10)?11:10;}
   function eligible(run,event){
     const year=storyYear(run),id=event.id;
     if(run.seen.includes(id)||event.career||!compatible(run,event)||!(event.years?event.years.includes(year):LEGACY_YEARS[year-1].includes(id)))return false;
     if(run.turn<(event.from||LEGACY_EARLIEST[id]||1))return false;
     if(run.turn===1&&!OPENERS.has(id))return false;
+    if(id===BURST_PIPE.id)return run.turn===housingTurn(run);
     if(id===282)return run.campus.ethics>=2&&run.campus.earlyCollection;
     if(id===283)return run.campus.reorganised&&run.campus.quiet>=3;
     if(id===104)return run.flags.opposition>=1||run.stats.t<18;
@@ -12498,7 +12531,7 @@ const Core = (() => {
       const challenges=eligibleCards.filter(event=>event.mini);
       if(challenges.length)return challenges[Math.floor(random(run)*challenges.length)].id;
     }
-    const cards=eligibleCards.filter(event=>!event.mini);
+    const cards=eligibleCards.filter(event=>!event.mini&&event.id!==BURST_PIPE.id);
     const turnsLeft=25-run.turn;
     const rareRoll=1+Math.floor(random(run)*100);
     if(cards.some(e=>e.id===282)&&(rareRoll<=45||turnsLeft<=3))return 282;
@@ -12510,6 +12543,7 @@ const Core = (() => {
       delete run.flags.remoteDue;
       return 134;
     }
+    if(eligibleCards.includes(BY_ID.get(BURST_PIPE.id))&&random(run)<HOUSING_CHANCE)return BURST_PIPE.id;
     if(run.enrolment){
       const at=(run.turn-1)%6+1;
       const history=run.history.filter(item=>item.kind==='event'&&Math.ceil(item.turn/6)===year).map(item=>BY_ID.get(item.id));
@@ -12564,7 +12598,7 @@ const Core = (() => {
       const old=run.stats[key];
       const gain=key==='r'&&delta>0&&run.research?.stalled?Math.floor(delta/2):delta;
       const next=old+gain;
-      run.stats[key]=['h','m','t','x','p'].includes(key)?clamp(next,0,100):next;
+      run.stats[key]=['h','m','t','n','x','p'].includes(key)?clamp(next,0,100):next;
       if(run.stats[key]!==old)actual[key]=run.stats[key]-old;
     }
     return actual;
@@ -12608,6 +12642,10 @@ const Core = (() => {
     if(Object.hasOwn(option.effect,'p'))return option.effect;
     const integrity=option.effect.i||0;
     return {...option.effect,p:Math.round(integrity/2)};
+  }
+  function optionAvailable(run,option){
+    const requirement=option?.requires;
+    return Boolean(option&&(!requirement||run?.stats?.[requirement.stat]>=requirement.min));
   }
   // Branch deltas override only the specified stats. The choice and its existing hooks stay intact.
   function optionOutcome(option,result){
@@ -12759,8 +12797,9 @@ const Core = (() => {
   function resolve(book,choice,die=null,miniGame=null){
     const run=book.run;
     if(run.phase!=='run'||!Number.isInteger(choice))return false;
-    const event=BY_ID.get(run.event),option=optionOutcome(event?.options[choice],miniGame);
-    if(!option)return false;
+    const event=BY_ID.get(run.event),base=event?.options[choice];
+    if(!optionAvailable(run,base))return false;
+    const option=optionOutcome(base,miniGame);
     const f=run.flags;
     const effect=apply(run,effectFor(option));
     const title=event.title;
@@ -13024,6 +13063,11 @@ const Core = (() => {
     run.enrolment=enrolment(run.enrolment);
     if(!Number.isFinite(run.stats.m))run.stats.m=65;
     if(run.yearBase?.stats&&!Number.isFinite(run.yearBase.stats.m))run.yearBase.stats.m=run.stats.m;
+    if(!Number.isFinite(run.stats.n)){
+      const meals=run.history.filter(item=>item.kind==='move'&&item.id==='peer').length;
+      run.stats.n=clamp(BASE_NETWORK+9*meals,0,100);
+    }
+    if(run.yearBase?.stats&&!Number.isFinite(run.yearBase.stats.n))run.yearBase.stats.n=run.stats.n;
     if(!Array.isArray(run.miniSlots)||run.miniSlots.length!==6||new Set(run.miniSlots).size!==6||
       !run.miniSlots.every(turn=>Number.isInteger(turn)&&turn>=2&&turn<=22))run.miniSlots=makeMiniSlots(run.seed);
     if(!Number.isInteger(run.careerVisits))run.careerVisits=1;
@@ -13075,7 +13119,7 @@ const Core = (() => {
     const phases=['run','result','gate','gateResult','career','academic','end','incident','incidentResult','publication'];
     return typeof run.name==='string'&&run.name.length<=24&&Number.isInteger(run.seed)&&
       Number.isInteger(run.turn)&&run.turn>=1&&run.turn<=24&&phases.includes(run.phase)&&
-      Object.keys(LABELS).every(key=>(['p','m'].includes(key)&&run.stats?.[key]==null)||Number.isFinite(run.stats?.[key])&&Math.abs(run.stats[key])<1000000)&&
+      Object.keys(LABELS).every(key=>(['p','m','n'].includes(key)&&run.stats?.[key]==null)||Number.isFinite(run.stats?.[key])&&Math.abs(run.stats[key])<1000000)&&
       Array.isArray(run.order)&&run.order.length===3&&new Set(run.order).size===3&&run.order.every(x=>[0,1,2].includes(x))&&
       Array.isArray(run.history)&&run.history.length<=250&&run.history.every(item=>item&&Number.isInteger(item.turn)&&item.turn>=1&&item.turn<=24&&typeof item.title==='string'&&typeof item.text==='string'&&item.effect&&typeof item.effect==='object')&&
       [run.seen,run.gates,run.awards].every(Array.isArray)&&run.awards.every(id=>Object.hasOwn(ENDINGS,id))&&
@@ -13100,7 +13144,7 @@ const Core = (() => {
     return b;
   }
   return {
-    TURNS,STORAGE,LABELS,BY_ID,ARCHIVE,BADGES,EVIDENCE,YEAR_NAMES,GATES,ENDINGS,MOVES,emptyBook,start,storyYear,aid,resolve,roll,advance,
+    TURNS,STORAGE,LABELS,BY_ID,ARCHIVE,BADGES,EVIDENCE,YEAR_NAMES,GATES,ENDINGS,MOVES,HOUSING_CHANCE,emptyBook,start,storyYear,aid,resolve,roll,advance,optionAvailable,
     repair,submitGate,afterGate,careerScene,afterCareerScene,career,previewChoice,recap,parseBook,auditChance,eligible,placement,sortChoice,target,resolveIncident,incidentNext,isMiniTurn,publishChoice,publishNext,
   };
 })();
@@ -14357,12 +14401,9 @@ window.MiniGameKit = (() => {
     return '<aside class="side" aria-label="'+tr('玩家状态','Player stats')+'"><section class="panel stats-panel">'
       +'<h3>'+esc(displayName(run))+'</h3>'+(run.enrolment?caption(enrolmentLabel(run)):'')+(origin?caption(tr(origin[0],origin[2])):'')+statGrid(run)
       +actions(btn('mechanics',tr('数值和结局','Stats and endings'),{style:'quiet'}))+'</section>'
-      +(run.phase==='run'?'<section class="panel"><h3>'+tr('顺手做一件事','One thing on the side')+'</h3>'+sideMoves(run)+'</section>':'')
       +btn('evidence',tr('证据夹','Evidence folder')+' · '+run.evidence.length)+btn('journal',tr('看本局记录','Run journal'))+'</aside>';
   }
-  function sideMoves(run){
-    const chosen=Core.MOVES.find(m=>m.id===run.aid);
-    if(chosen)return caption(tr('本回合已做 · ','This turn: ')+moveText(chosen)[0]);
+  function sideMoves(){
     return '<div class="side-moves">'+Core.MOVES.map(m=>{
       const [name,detail]=moveText(m);
       return '<button class="side-move" data-action="aid" data-value="'+m.id+'"'+(rolling?' disabled':'')+'>'+esc(name)+'<small>'+esc(detail)+'</small></button>';
@@ -14376,23 +14417,22 @@ window.MiniGameKit = (() => {
   }
   function pocketNav(run){
     const tabs=[
-      ['turn-tools','⊕',tr('行动','Action')],
       ['player-stats','◈',tr('状态','Stats')],
       ['evidence','▤',tr('证据','Evidence')],
       ['journal','≡',tr('日志','Journal')],
     ];
     return '<nav class="pocket-nav" aria-label="'+tr('本局工具','Run tools')+'">'+tabs.map(([id,icon,label])=>
       btn(id,'<span aria-hidden="true">'+icon+'</span>'+label+(id==='evidence'&&run.evidence.length?'<sup>'+run.evidence.length+'</sup>':''),
-        {aria:label,disabled:id==='turn-tools'&&run.phase!=='run'})).join('')+'</nav>';
+        {aria:label})).join('')+'</nav>';
   }
   function playerStats(run){
     const origin=ORIGINS[run.profile?.origin];
     showDialog('player-stats',displayName(run),'<div class="stack">'+(run.enrolment?caption(enrolmentLabel(run)):'')+(origin?caption(tr(origin[0],origin[2])):'')
       +statGrid(run)+actions(btn('mechanics',tr('数值和结局','Stats and endings')))+'</div>');
   }
-  function turnTools(run){
+  function turnTools(){
     showDialog('turn-tools',tr('顺手做一件事','One thing on the side'),
-      '<div class="stack">'+caption(tr('每回合可以额外做一件事。','You can do one extra activity each turn.'))+sideMoves(run)+'</div>');
+      '<div class="stack">'+caption(tr('每回合可以额外做一件事。','You can do one extra activity each turn.'))+sideMoves()+'</div>');
   }
   function mechanics(run){
     const need=Research.required(run);
@@ -14404,6 +14444,7 @@ window.MiniGameKit = (() => {
       return '<li><b>'+esc(endText(id)[0])+'</b>'+caption(exact?local(exact):choices.join(' / '))+'</li>';
     }).join('');
     const audit=run&&!(Core.storyYear(run)===4&&run.flags.hearingWon)?Math.round(Core.auditChance(run)*100):0;
+    const housingPercent=Math.round(Core.HOUSING_CHANCE*100)+'%';
     showDialog('mechanics',tr('数值和结局','Stats and endings'),'<div class="stack">'
       +(need?'<p class="result">'+esc(tr(
         '本校游戏规则：博四终审至少 '+need.total+' 篇交齐最终版，其中 '+need.featured+' 篇达到本系目标档次。这是虚构院校门槛。',
@@ -14415,15 +14456,15 @@ window.MiniGameKit = (() => {
       +caption(tr('开启抽查后，基础概率 =（风险 −20）÷115 + 低于 −25 的人品差 ÷160 + 低于 37 的声誉差 ÷215，最后限制在 6% 至 82%。','Once active, the audit probability is (exposure − 20)/115 + the integrity shortfall below −25/160 + the reputation shortfall below 37/215, capped at 6–82%.'))
       +caption(tr('确认会插曲基础概率 42%，终审插曲 47%。学院重组加 10 个百分点，邮件丢失加 4 个，导师好感低于 30 加 6 个。','Confirmation incidents start at 42%; final-review incidents at 47%. A restructure adds 10 percentage points, lost correspondence adds 4, and supervisor approval below 30 adds 6.'))
       +caption(tr('稿件录用率由准备质量、所投档次、回应方式、心情和声誉共同决定，限制在 12% 至 96%。评审结果会显示本次实际判定概率。','Simulated acceptance depends on manuscript quality, venue, response, mood and reputation, within 12–96%. Each decision shows the probability used.'))
+      +caption(tr('租房爆水管在博二的一个普通回合抽一次，触发概率 '+housingPercent+'。如果当轮有必须先处理的剧情，就先处理那件事。','The burst pipe has one '+housingPercent+' roll on a regular second-year turn. An urgent story already due that turn takes priority.'))
       +caption(tr('上面都是游戏内单次判定。整局结局还取决于抽到的事件和玩家选项，所以没有固定的通关概率。','These probabilities apply to individual in-game decisions. Overall endings depend on which events you see and what you choose.'))
       +'</div></details><details class="rules-details"><summary>'+tr('展开全部结局条件（剧透）','Show every ending condition (spoilers)')+'</summary><ol class="report-list">'+rows+'</ol></details></div>');
   }
   function turnReminder(run){
-    if(run.phase!=='run')return '';
     const chosen=Core.MOVES.find(move=>move.id===run.aid);
-    return '<section class="turn-reminder'+(chosen?' done':'')+'"><div><strong>'+tr('本轮行动','Turn activity')+'</strong><small>'
-      +(chosen?esc(tr('已完成 · ','Done · ')+moveText(chosen)[0]):tr('还可以做一件事 · 可跳过','One optional activity left'))
-      +'</small></div>'+(chosen?'<span aria-hidden="true">✓</span>':btn('turn-tools',tr('选行动','Choose'),{style:'turn-choose'}))+'</section>';
+    return '<section class="turn-reminder'+(chosen?' done':'')+'" aria-labelledby="side-activity"><div'+(chosen?' tabindex="-1"':'')+'><strong id="side-activity">'+tr('顺手做一件事','One thing on the side')+'</strong><small>'
+      +(chosen?esc(tr('已完成 · ','Done · ')+moveText(chosen)[0]):tr('可选 · 每回合一次','Optional · once per turn'))
+      +'</small></div>'+(chosen?'<span class="turn-check" aria-hidden="true">✓</span>':btn('turn-tools',tr('选行动','Choose'),{style:'turn-choose',disabled:rolling}))+'</section>';
   }
   function eventHeader(e,round,challenge=false){
     const e2=scene(e);
@@ -14444,11 +14485,15 @@ window.MiniGameKit = (() => {
   }
   function optionButtons(e,route,selected=null,cards=false){
     return '<div class="cases '+(cards?'quick-cards':'')+'">'+scene(e).options.map((o,i)=>{
-      const hint=route==='main'&&e.risky&&e.options[i].effect.x>=12?'<small>'+tr('可能被记上一笔','May leave a paper trail')+'</small>':'';
-      const gameHint=route!=='preview-option'&&e.options[i].miniGame?'<small>'+tr('含小游戏','Includes a minigame')
-        +(e.options[i].miniGameConfig?.allowSkip?tr(' · 可跳过',' · skippable'):'')+'</small>':'';
+      const option=e.options[i],requirement=option.requires;
+      const locked=route==='main'&&!Core.optionAvailable(book.run,option);
+      const hint=route==='main'&&e.risky&&option.effect.x>=12?'<small>'+tr('可能被记上一笔','May leave a paper trail')+'</small>':'';
+      const gameHint=route!=='preview-option'&&option.miniGame?'<small>'+tr('含小游戏','Includes a minigame')
+        +(option.miniGameConfig?.allowSkip?tr(' · 可跳过',' · skippable'):'')+'</small>':'';
+      const need=requirement?'<small>'+esc(tr('需要'+stat(requirement.stat)+' '+requirement.min,stat(requirement.stat)+' '+requirement.min+' needed'))
+        +(route==='main'?esc(tr(' · 当前 '+book.run.stats[requirement.stat],' · You have '+book.run.stats[requirement.stat])):'')+'</small>':'';
       return '<button class="choice '+(hint?'risk ':'')+(selected===i?'chosen':'')+'" data-action="'+route+'" data-value="'+i
-        +'"'+(route==='stamp'?' aria-pressed="'+(selected===i)+'"':'')+'><b aria-hidden="true">'+LETTERS[i]+'</b><span>'+esc(o.label)+hint+gameHint+'</span></button>';
+        +'"'+(locked?' disabled':'')+(route==='stamp'?' aria-pressed="'+(selected===i)+'"':'')+'><b aria-hidden="true">'+LETTERS[i]+'</b><span>'+esc(o.label)+hint+gameHint+need+'</span></button>';
     }).join('')+'</div>';
   }
   function eventStory(e,i,variant,miniGame){
@@ -14523,7 +14568,8 @@ window.MiniGameKit = (() => {
 
   function eventView(run){
     const e=BY_ID.get(run.event);
-    return '<section class="panel scene '+(e.risky?'risky':'')+'">'+eventHeader(e,tr('第 '+run.turn+' / 24 回合','TURN '+run.turn+' / 24'),Core.isMiniTurn(run))+actualPlay(e,run)+'</section>';
+    return '<section class="panel scene '+(e.risky?'risky':'')+'">'+eventHeader(e,tr('第 '+run.turn+' / 24 回合','TURN '+run.turn+' / 24'),Core.isMiniTurn(run))
+      +turnReminder(run)+actualPlay(e,run)+'</section>';
   }
   function resultView(run){
     const c=run.choice,e=BY_ID.get(c.event),o=scene(e).options[c.choice];
@@ -14609,12 +14655,13 @@ window.MiniGameKit = (() => {
     const phase=current?local(paperStatus[current.status]):tr('本年待开题','This year’s draft is pending');
     const dots=current?({writing:1,submitted:2,rejected:3,accepted:3,filed:4,paused:1,missed:3}[current.status]||0):0;
     const filled=Array.from({length:4},(_,i)=>'<i'+(i<dots?' class="filled"':'')+'></i>').join('');
-    return '<section class="paper-progress"><div><span class="eyebrow">'+tr('主线 · 论文','MAIN STORY · PAPER')+'</span>'
+    return '<section class="paper-progress"><div class="paper-summary"><span class="eyebrow">'+tr('主线 · 论文','MAIN STORY · PAPER')+'</span>'
       +'<strong>'+esc(current?local(current.title):tr('博'+['一','二','三','四'][year-1]+'稿件','Year '+year+' manuscript'))+'</strong>'
-      +'<small>'+esc(phase)+(current?.venue?' · '+esc(local(current.venue)):'')+'</small></div>'
-      +'<div class="paper-progress-meters"><div class="paper-steps" role="img" aria-label="'+esc(phase)+'">'+filled+'</div>'
-      +'<small>'+tr('已交最终版','Papers filed')+' <b>'+got.total+'/'+needed.total+'</b> · '
-      +tr(run.enrolment.track==='security'?'A/A*':'重点期刊',run.enrolment.track==='security'?'A/A*':'Selective')+' <b>'+got.featured+'/'+needed.featured+'</b></small></div></section>';
+      +'<div class="paper-meta"><small>'+esc(phase)+'</small>'+(current?.venue?'<small class="paper-venue">'+esc(local(current.venue))+'</small>':'')+'</div></div>'
+      +'<div class="paper-progress-meters"><div class="paper-steps" role="progressbar" aria-label="'+tr('本篇论文进度','Manuscript progress')
+      +'" aria-valuemin="0" aria-valuemax="4" aria-valuenow="'+dots+'" aria-valuetext="'+esc(phase)+'">'+filled+'</div>'
+      +'<div class="paper-counts"><small>'+tr('已交最终版','Papers filed')+' <b>'+got.total+'/'+needed.total+'</b></small>'
+      +'<small>'+tr(run.enrolment.track==='security'?'A/A*':'重点期刊',run.enrolment.track==='security'?'A/A*':'Selective')+' <b>'+got.featured+'/'+needed.featured+'</b></small></div></div></section>';
   }
   function campusProgress(run){
     if(!run.incident||!['incident','incidentResult'].includes(run.phase))return '';
@@ -14711,7 +14758,7 @@ window.MiniGameKit = (() => {
     const views={run:eventView,result:resultView,publication:publicationView,gate:gateView,gateResult,career:careerView,end:endView,incident:incidentView,incidentResult};
     const pre=run.incident?.when==='offer'&&['incident','incidentResult'].includes(run.phase);
     return '<main class="campaign">'+(run.enrolment?'<p class="pocket-affiliation">'+esc(enrolmentLabel(run))+'</p>':'')+(pre?'':timeline(run))+pocketStats(run)
-      +(pre?'':paperProgress(run))+campusProgress(run)+turnReminder(run)
+      +(pre?'':paperProgress(run))+campusProgress(run)
       +'<div class="layout">'+views[run.phase](run)+sidebar(run)+'</div>'+pocketNav(run)+'</main>';
   }
   function render(){
@@ -15072,15 +15119,17 @@ window.MiniGameKit = (() => {
       case 'evidence':evidenceFolder();break;
       case 'player-stats':if(run)playerStats(run);break;
       case 'mechanics':mechanics(run);break;
-      case 'turn-tools':if(run?.phase==='run')turnTools(run);break;
+      case 'turn-tools':if(run?.phase==='run'&&!run.aid)turnTools();break;
       case 'publication-choice':update(()=>Core.publishChoice(book,n));break;
       case 'publication-next':update(()=>Core.publishNext(book));break;
       case 'plain':plainMode=!plainMode;render();app.querySelector('[data-action="plain"]')?.focus();break;
-      case 'aid':update(()=>{
-        if(!Core.aid(run,value))return false;
-        if(activeDialog==='turn-tools')dialog.close();
-        return true;
-      });break;
+      case 'aid':
+        if(!Core.aid(run,value))break;
+        dialog.close();
+        persist();
+        render();
+        app.querySelector('.turn-reminder [tabindex="-1"]')?.focus({preventScroll:true});
+        break;
       case 'main':mainChoice(run,n);break;
       case 'incident-choice':void chooseOption(run,run?.incident?.id,n,result=>Core.resolveIncident(book,n,result));break;
       case 'incident-next':update(()=>Core.incidentNext(book));break;
